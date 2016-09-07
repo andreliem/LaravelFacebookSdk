@@ -45,6 +45,7 @@ trait SyncableGraphNodeTrait
 
         $data = static::convertGraphNodeDateTimesToStrings($data);
 
+        // TODO - use id (facebook id) or email as means of finding existing record 
         if (! isset($data['id'])) {
             throw new \InvalidArgumentException('Graph node id is missing');
         }
