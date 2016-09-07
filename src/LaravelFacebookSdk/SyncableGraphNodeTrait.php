@@ -36,7 +36,7 @@ trait SyncableGraphNodeTrait
      *
      * @throws \InvalidArgumentException
      */
-    public static function createOrUpdateGraphNode($data)
+    public static function createOrUpdateGraphNode($data, $fieldId = 'id')
     {
         // @todo this will be GraphNode soon
         if ($data instanceof GraphObject || $data instanceof GraphNode) {
@@ -45,12 +45,11 @@ trait SyncableGraphNodeTrait
 
         $data = static::convertGraphNodeDateTimesToStrings($data);
 
-        // TEST COMMIT COMMENT
         if (! isset($data['id'])) {
             throw new \InvalidArgumentException('Graph node id is missing');
         }
 
-        $attributes = [static::getGraphNodeKeyName() => $data['id']];
+        $attributes = [static::fieldToColumnName($fieldId) => $data[$fieldId]];
 
         $graph_node = static::firstOrNewGraphNode($attributes);
 
